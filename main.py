@@ -19,24 +19,24 @@ def user_flow():
         pdf_path = f"pdfs/{subject.lower()}.pdf"
         document_ques_gen, document_answer_gen = file_processing(pdf_path)
         
-        max_attempts = 3
+        max_attempts = 1
         for attempt in range(max_attempts):
             mcq_questions = generate_mcq(document_answer_gen)
             
             if mcq_questions:
                 break
-            else:
-                print(f"Attempt {attempt + 1} failed to generate questions. Retrying...")
+            # else:
+            #     print(f"Attempt {attempt + 1} failed to generate questions. Retrying...")
         
         if mcq_questions:
             # Save newly generated questions to CSV
             save_questions_to_csv(subject, mcq_questions)
-            print(f"New questions for {subject} have been generated and saved.")
+            print(f"New questions for {subject} have been generated.")
             
             # Run the quiz with the newly generated questions
-            run_quiz_from_csv(subject)
-        else:
-            print(f"Failed to generate questions for {subject} after {max_attempts} attempts.")
+        run_quiz_from_csv(subject)
+        # else:
+        #     print(f"Failed to generate questions for {subject} after {max_attempts} attempts.")
     else:
         print(f"Sorry, the PDF for {subject} is not available.")
 

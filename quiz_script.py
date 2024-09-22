@@ -21,7 +21,7 @@ def load_llm():
 
 def generate_mcq(document_answer_gen, num_questions=5):
     if not document_answer_gen:
-        print("Error: No document content available for question generation.")
+        print("Sorry: No document content available for question generation.")
         return []
 
     embeddings = HuggingFaceBgeEmbeddings(model_name="sentence-transformers/all-mpnet-base-v2")
@@ -51,9 +51,9 @@ def generate_mcq(document_answer_gen, num_questions=5):
             mcq_response = answer_generation_chain.invoke(mcq_prompt)
             
             # Debug: Print raw response
-            print(f"Raw response for question {i+1}:")
-            print(mcq_response)
-            print("---")
+            # print(f"Raw response for question {i+1}:")
+            # print(mcq_response)
+            # print("---")
 
             # Parse the MCQ response
             if isinstance(mcq_response, dict) and 'result' in mcq_response:
@@ -84,11 +84,12 @@ def generate_mcq(document_answer_gen, num_questions=5):
                     "options": options,
                     "correct_answer": correct_answer  # This is now just the letter (A, B, C, or D)
                 })
-            else:
-                print(f"Error: Invalid response format for question {i+1}")
+            # else:
+            #     print(f"Error: Invalid response format for question {i+1}")
 
         except Exception as e:
-            print(f"Error generating question {i+1}: {str(e)}")
+            pass
+            # print(f"Error generating question {i+1}: {str(e)}")
 
     return mcq_questions
 
